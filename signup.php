@@ -8,8 +8,8 @@ require 'actions.php';
 <html>
 
 <head>
-    <title>TO-DO App</title>
-
+    <title>Registarme TO-DO</title>
+    <!-- ESTILOS PARA FORMULARIO -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -52,7 +52,7 @@ require 'actions.php';
     <div class="container">
         <h1>Bienvenido</h1>
 
-
+        <!-- FORMULARIO PARA ENVIAR DATOS Y REGISTRARSE -->
         <form action="" method="POST">
 
 
@@ -65,9 +65,10 @@ require 'actions.php';
         </form>
 
         <?php
-
+        // VERIFICAMOS SI LOS CAMPOS ESTAN ESTABLECIDOS PARA EJECUTAR LAS CONSULTAS EN LA BASE DE DATOS
         if (isset($_POST['user']) && isset($_POST['password_1']) && isset($_POST['password_2']) ) {
             if($_POST['password_1'] == $_POST['password_2']){
+                // SI AMBAS CONTRASEÑAS SON IGUALES EJECUTAMOS LA FUNCION
                 signup($_POST['user'], $_POST['password_1']);
             }
         }

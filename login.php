@@ -8,8 +8,9 @@ require 'actions.php';
 <html>
 
 <head>
-    <title>TO-DO App</title>
-
+    <title>Inicia Sesión en TO-DO</title>
+    
+    <!-- ESTILOS PARA FORMULARIO -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -52,7 +53,7 @@ require 'actions.php';
     <div class="container">
         <h1>Bienvenido</h1>
 
-
+        <!-- FORMULARIO PARA ENVIAR DATOS Y REGISTRARSE -->
         <form action="" method="POST">
 
 
@@ -63,13 +64,15 @@ require 'actions.php';
 
             <button type="submit">Iniciar Sesión</button>
         </form>
+        <!-- HIPERVINCULO PARA IR A REGISTRARME -->
         <a href="signup.php">Registarme</a>
         
         
 
         <?php
-
+        // VERIFICAMOS SI LOS CAMPOS ESTAN ESTABLECIDOS PARA EJECUTAR LAS CONSULTAS EN LA BASE DE DATOS
         if (isset($_POST['user']) && isset($_POST['password'])) {
+            //SI ESTAN ESTABLECIDOS VERIFICAMOS EN LA BASE DE DATOS
             login($_POST['user'], $_POST['password']);
         }
 
