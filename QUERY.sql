@@ -1,0 +1,14 @@
+
+CREATE TABLE users (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  username VARCHAR(50) NOT NULL,
+  pass VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE todos (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT,
+  task VARCHAR(255),
+  state VARCHAR(255),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
