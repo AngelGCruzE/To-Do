@@ -1,6 +1,18 @@
+
+
 <?php
+
+session_start();
+if (!isset($_SESSION['username']) && !isset($_SESSION['user_id'])) {
+  header("Location: login.php");
+  exit();
+}
+
+
 require 'db.php';
 require 'actions.php';
+
+
 ?>
 
 
@@ -14,24 +26,31 @@ require 'actions.php';
 
 <body>
   <div class="container">
-    <h1>Bienvenido, <?php echo "USUARIO_NAME" ?></h1>
+    <h1>Bienvenido, <?php echo $_SESSION['username']; ?></h1>
 
     <form action="" method="POST">
       <input type="text" name="task" placeholder="Nueva tarea" required>
+      <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
       <button type="submit">Agregar tarea</button>
     </form>
 
     <?php
-    if (isset($_POST['task'])) {
-      createTask($_POST['task']);
+    if (isset($_POST['task']) && isset($_POST['user_id'])) {
+      createTask($_POST['task'], $_POST['user_id']);
     }
 
     if (isset($_POST['task_id']) && isset($_POST['state'])) {
       updateTask($_POST['task_id'], $_POST['state']);
     }
 
-    if (isset($_POST['CLEAR_ALL'])) {
-      deleteTasks();
+    if (isset($_POST['CLEAR_ALL']) && isset($_POST['user_id'])) {
+      deleteTasks($_POST['user_id']);
+    }
+
+    if (isset($_POST['LOGOUT'])) {
+      session_destroy();
+      header("Location: login.php");
+      exit();
     }
     ?>
 
@@ -48,7 +67,7 @@ require 'actions.php';
       <?php
 
 
-      $sql = "SELECT * FROM todos";
+      $sql = "SELECT * FROM todos WHERE user_id = '" . $_SESSION['user_id'] . "' ";
       $result = $conn->query($sql);
 
       if ($result->num_rows > 0) {
@@ -70,7 +89,7 @@ require 'actions.php';
               </select>
 
               <input type="hidden" name="task_id" value="<?= $task_id ?>">
-
+              
 
               <button type="submit">Actualizar</button>
             </form>
@@ -87,7 +106,15 @@ require 'actions.php';
     <form action="" method="POST">
 
       <input type="hidden" name="CLEAR_ALL" value="true">
+      <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
       <button type="submit">BORRAR TODOS</button>
+
+    </form>
+
+    <form action="" method="POST">
+
+      <input type="hidden" name="LOGOUT" value="true">
+      <button type="submit">CERRAR SESION</button>
 
     </form>
     <!-- <a href="logout.php">Cerrar sesión</a> -->
