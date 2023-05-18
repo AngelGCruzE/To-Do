@@ -23,17 +23,27 @@ require 'actions.php';
 
     <?php
     if (isset($_POST['task'])) {
-      addTasks($_POST['task']);
+      createTask($_POST['task']);
     }
 
     if (isset($_POST['task_id']) && isset($_POST['state'])) {
       updateTask($_POST['task_id'], $_POST['state']);
+    }
+
+    if (isset($_POST['CLEAR_ALL'])) {
+      deleteTasks();
     }
     ?>
 
 
 
     <h2>Tus tareas:</h2>
+
+    <ul class="status_colors">
+      <li><span>TERMINADA: <span style="color:#2ecc71;">*</span> </span></li>
+      <li><span>PENDIENTE: <span style="color:#eb4d4b;">*</span> </span></li>
+    </ul>
+
     <ul>
       <?php
 
@@ -49,18 +59,18 @@ require 'actions.php';
       ?>
 
           <li>
-            <form action="" method="POST">
+            <form action="" method="POST" class="<?= $completed == "COMPLETED" ? 'completed' : '' ?> ">
 
 
-              <span class='task <?= $completed == "COMPLETED" ? 'completed' : '' ?> '> <?php echo $task ?> </span>
+              <span class='task'> <?php echo $task ?> </span>
 
               <select name="state" id="" default="">
-                <option value="PENDING" <?= $completed == "PENDING" ? 'selected' : '' ?> >PENDIENTE</option>
-                <option value="COMPLETED" <?= $completed == "COMPLETED" ? 'selected' : '' ?> >COMPLETADA</option>
+                <option value="PENDING" <?= $completed == "PENDING" ? 'selected' : '' ?>>PENDIENTE</option>
+                <option value="COMPLETED" <?= $completed == "COMPLETED" ? 'selected' : '' ?>>COMPLETADA</option>
               </select>
-              
+
               <input type="hidden" name="task_id" value="<?= $task_id ?>">
-              
+
 
               <button type="submit">Actualizar</button>
             </form>
@@ -74,6 +84,12 @@ require 'actions.php';
       ?>
     </ul>
 
+    <form action="" method="POST">
+
+      <input type="hidden" name="CLEAR_ALL" value="true">
+      <button type="submit">BORRAR TODOS</button>
+
+    </form>
     <!-- <a href="logout.php">Cerrar sesión</a> -->
 
   </div>
