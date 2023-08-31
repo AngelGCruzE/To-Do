@@ -11,7 +11,7 @@ function createTask($task, $user_id){
   $state = $conn->query($sql); //EJECUTAR CONSULTA ALA BASE DE DATOS
 
   if($state){
-    // echo "<script>alert('Tarea Agregada');</script>";
+     echo "<script>alert('Tarea Agregada');</script>"; // quite el comentario para que salga la alerta
   }
 }
 
@@ -33,58 +33,84 @@ function deleteTasks($user_id){
   
 }
 
-// INICIAMOS SESION POR MEDIO DEL USUARIO Y CONTRASEÑA 
+// INICIAMOS SESION POR MEDIO DEL USUARIO Y CONTRASEÑA (segura contra sqli)
 function login($user, $password){
   global $conn;
 
-  $sql = "SELECT * FROM `tasks`.`users` WHERE username = '$user' AND pass = '$password'";
-  $result = $conn->query($sql);
-    
-  // SI EL NUMERO DE REGISTROS ES CERO ENTONCES NO HAY PERSONAS CON EL USUARIO Y CONTRASEÑA
-  if ($result->num_rows == 0) {
-    return false;
-  } else {
-    // CASO CONTRARIO QUIERE DECIR QUE SI HAY ALGUIEN CON ESOS DATOS, OBTENEMOS EL NOMBRE DE USUARIO Y SU ID.
+  // se prepara la consulta para evitar inyeccion
+  $sql = "SELECT id, username, pass FROM `tasks`.`users` WHERE username = ?";
+  $stmt = $conn->prepare($sql);
+
+  // Vincula los parámetros y establece sus valores
+  $stmt->bind_param("s", $user);
+
+  // Ejecuta la consulta
+  $stmt->execute();
+
+  // Obtiene el resultado
+  $result = $stmt->get_result();
+
+  // verifica el usuario
+  if ($result->num_rows == 1) {
     $row = $result->fetch_assoc();
-    $username = $row['username']; // Obtener el valor de la columna "username"
-    $id = $row['id'];
-    // GUARDAMOS LA SESION DEL USUARIO
-    session_start();
-    $_SESSION['username'] = $username;
-    $_SESSION['user_id'] = $id;
+    // llama la contraseña
+    $stored_password = $row['pass']; 
 
-    // LO REDIRIGIMOS A LA APLICACION
-    header("Location: index.php");
+    // verifica la contrasela
+    if (password_verify($password, $stored_password)) {
+      // inicia secion
+      session_start();
+      $_SESSION['username'] = $row['username'];
+      $_SESSION['user_id'] = $row['id'];
 
-    return true;
+      // accede a la app 
+      header("Location: index.php");
+      return true;
+    }else{
+      echo "<script>alert('contraseña mal');</script>";
+    }
+  }else{
+    echo "<script>alert('usuario');</script>";
   }
+  return false;
 }
 
 // METODO PARA REGISTRARME EN LA APLICACION
 function signup($user, $password){
   global $conn;
 
-  $sql = "SELECT * FROM `tasks`.`users` WHERE username = '$user'";
-  $result = $conn->query($sql);
-    
-  // SI YA EXISTE UNA PERSONA CON EL MISMO USUARIO ENTONCES EL USUARIO ES INAVLIDO Y TIENE QUE PONER OTRO
-  if ($result->num_rows == 1) {
-    return false;
-  } else if ($result->num_rows == 0){
-    // SI NO HAY NINGUMO EL NOMBRE DE USUARIO ESTA DISPONIBLE Y ASIGNAMOS LAS CREDENCIALES
-    $sql = "INSERT INTO users (username, pass) VALUES ('$user', '$password')";
-    $state = $conn->query($sql); //EJECUTAR CONSULTA ALA BASE DE DATOS
-    // LO REDIRIGIMOS A INICIO DE SESION
-    if($state){
-      header("Location: login.php");
-    }
+  // valida el usuario con consulta preparada
+  $query_check_user = "SELECT * FROM `tasks`.`users` WHERE username = ?";
+  $stmt_check_user = $conn->prepare($query_check_user);
+  $stmt_check_user->bind_param("s", $user);
+  $stmt_check_user->execute();
+  $result_check_user = $stmt_check_user->get_result();
 
-    return true;
-  }else{
+  // Comprueba si ya existe un usuario con el mismo nombre
+  if ($result_check_user->num_rows > 0) {
+    echo "<script>alert('usuario existe');</script>";
     return false;
+  } else {
+    // Genera un hash 
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // crea el usuario con la consulta prep
+    $query_insert_user = "INSERT INTO users (username, pass) VALUES (?, ?)";
+    $stmt_insert_user = $conn->prepare($query_insert_user);
+    $stmt_insert_user->bind_param("ss", $user, $hashed_password);
+    $stmt_insert_user->execute();
+
+    // Comprueba si la inserción tuvo éxito
+    if ($stmt_insert_user->affected_rows === 1) {
+      // redirige al login si se registro bien
+      header("Location: login.php");
+      echo "<script>alert('exito');</script>";
+      return true;
+    } else {
+      return false;
+    }
   }
 }
-
 
 
 

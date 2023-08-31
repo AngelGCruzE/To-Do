@@ -13,6 +13,7 @@ require 'actions.php';
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #2ecc71;
         }
 
         .container {

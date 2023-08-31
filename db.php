@@ -3,7 +3,7 @@
 //parametros para conectarme ala base de datos
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "Xiaft4tF";
 $database = "tasks";
 
 // Crear conexión

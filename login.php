@@ -14,6 +14,7 @@ require 'actions.php';
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #2ecc71;
         }
 
         .container {
@@ -46,10 +47,14 @@ require 'actions.php';
         button {
             padding: 5px 10px;
         }
+        img{
+            height: auto;
+        }
     </style>
 </head>
 
 <body>
+    
     <div class="container">
         <h1>Bienvenido</h1>
 
