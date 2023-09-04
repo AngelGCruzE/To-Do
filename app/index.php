@@ -1,18 +1,18 @@
-
-
 <?php
 
 // VERIFICAMOS SI HAY UNA SESION INICIADA
 session_start();
 if (!isset($_SESSION['username']) && !isset($_SESSION['user_id'])) {
   // SI NO HAY SESION INICIADA LO REDIRIGIMOS A LOGIN
-  header("Location: login.php");
+  header("Location: userLS.php");
   exit();
+}else{
+  echo "<script>Swal.fire('Any fool can use a computer')</script>";
 }
 
 // INCLUIMOS LA CONEXION A LA BASE DE DATOS,ADEMAS DE LAS FUNCIONES QUE EJECUTAN CAMBIOS EN LA APP
-require 'db.php';
-require 'actions.php';
+require '../functions/actions.php';
+require '../functions/db.php';
 
 
 ?>
@@ -23,8 +23,18 @@ require 'actions.php';
 
 <head>
   <title>App TO-DO</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="../app/styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+<header>
+  <img class="logo" src="../app/img/Logo_horizontal-removebg-preview.png">
+  <!-- IMPRIMIMOS NOMBRE DEL USUARIO EN LA SESION -->
+  <div class="opBar">
+  <h1 class="userNameSty"><?php echo $_SESSION['username']; ?></h1>
+  <a class="bckbtn" href="../app/config.php"><img class="bkbtn" src="../app/img/setti.png"></a>
+  </div>
+</header>
 
 <body>
   <div class="container">
@@ -84,7 +94,7 @@ require 'actions.php';
           $task = $row['task'];
           $completed = $row['state'];
       ?>
-        <!-- SE IMPRIMIRAN ITEMS DE LISTA CON LAS TAREAS DINAMICAMENTE DEPENDE DE LA CANTIDAD DE REGISTROS EN LA BASE DE DATOS -->
+          <!-- SE IMPRIMIRAN ITEMS DE LISTA CON LAS TAREAS DINAMICAMENTE DEPENDE DE LA CANTIDAD DE REGISTROS EN LA BASE DE DATOS -->
           <li>
             <!-- CREAMOS UN FORMULARIO PARA EJECUTAR ACCIONES DE ACTUALIZACION SOBRE LA TAREA -->
             <form action="" method="POST" class="<?= $completed == "COMPLETED" ? 'completed' : '' ?> ">
@@ -98,7 +108,7 @@ require 'actions.php';
               </select>
               <!-- MANDAMOS EL TASK_ID AL FORMULARIO PARA IDENTIFICAR A CUAL TAREA VAMOS ALTERAR -->
               <input type="hidden" name="task_id" value="<?= $task_id ?>">
-              
+
 
               <button type="submit">Actualizar</button>
             </form>
@@ -112,7 +122,7 @@ require 'actions.php';
       }
       ?>
     </ul>
-      <!-- CREAMOS UN FORMULARIO PARA EJECUTAR LA ACCION DE BORRAR TODAS LAS TAREAS DEL USUARIO -->
+    <!-- CREAMOS UN FORMULARIO PARA EJECUTAR LA ACCION DE BORRAR TODAS LAS TAREAS DEL USUARIO -->
     <form action="" method="POST">
 
       <input type="hidden" name="CLEAR_ALL" value="true">
@@ -120,18 +130,18 @@ require 'actions.php';
       <button type="submit">BORRAR TODOS</button>
 
     </form>
-      <!-- FORMULARIO PARA SOLICITAR QUE SE EJECUTE LA FUNCION DE CERRAR SESION -->
+    <!-- FORMULARIO PARA SOLICITAR QUE SE EJECUTE LA FUNCION DE CERRAR SESION -->
     <form action="" method="POST">
 
       <input type="hidden" name="LOGOUT" value="true">
       <button type="submit">CERRAR SESION</button>
 
     </form>
-    
+
 
   </div>
 
-  
+
 </body>
 
 </html>

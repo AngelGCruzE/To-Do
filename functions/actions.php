@@ -1,6 +1,6 @@
 <?php
 
-require 'db.php';
+require '../functions/db.php';
 
 
 //metodo para añadir tarea
@@ -67,10 +67,22 @@ function login($user, $password){
       header("Location: index.php");
       return true;
     }else{
-      echo "<script>alert('contraseña mal');</script>";
+      echo '<script>
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Usuario o contraseña incorrectos!",
+            });
+          </script>';
     }
   }else{
-    echo "<script>alert('usuario');</script>";
+    echo '<script>
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Usuario o contraseña incorrectos!",
+            });
+          </script>';
   }
   return false;
 }
@@ -103,8 +115,14 @@ function signup($user, $password){
     // Comprueba si la inserción tuvo éxito
     if ($stmt_insert_user->affected_rows === 1) {
       // redirige al login si se registro bien
-      header("Location: login.php");
-      echo "<script>alert('exito');</script>";
+      header("Location: userLS.php");
+      echo '<script>
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Usuario o contraseña incorrectos!",
+            });
+          </script>';/*ESTA CHINGADERA NO FUNCIONA*/
       return true;
     } else {
       return false;
