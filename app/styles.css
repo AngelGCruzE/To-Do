@@ -1,152 +1,236 @@
-body{
-    background-color: #373739;
-}
-header{
-    background-color: aqua;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: .5rem;
-    margin: .5rem;
-    border-radius: 10px;
-}
-.userNameSty{
- margin-right: 3rem;
- font-family: "Comic Sans MS", "Comic Sans", cursive;
-}
-.bkbtn{
-    height: 50px;
-}
-.bckbtn{
-    border-radius: 1rem;
-    background-color: aliceblue;
-}
-.bckbtn:hover {
-    background-color: gray; /* Cambia el fondo en hover */
-    color: #fff; /* Cambia el color del texto en hover */
-    transition: background-color 0.3s, color 0.3s; /* Transición de color y fondo en hover */
-  }
-.logo{
-    height: 5rem;
-}
-.opBar{
-    display: flex;
-    margin-right: 3rem;
-}
-.session1{
-    background-color: greenyellow;
-    display: flex;
-    flex-direction: column;
-}
-/*----Login----*/
-.bodylg{
-	margin: 0;
-	padding: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	min-height: 100vh;
-	font-family: 'Jost', sans-serif;
-	background: linear-gradient(to bottom, #318CE7, #4a9ae9, #6aa9e9);
-}
-.main{
-	width: 350px;
-	height: 500px;
-	background: #ff0000;
-	overflow: hidden;
-	/*fondo transparente background: url("https://doc-08-2c-docs.googleusercontent.com/docs/securesc/68c90smiglihng9534mvqmq1946dmis5/fo0picsp1nhiucmc0l25s29respgpr4j/1631524275000/03522360960922298374/03522360960922298374/1Sx0jhdpEpnNIydS4rnN4kHSJtU1EyWka?e=view&authuser=0&nonce=gcrocepgbb17m&user=03522360960922298374&hash=tfhgbs86ka6divo3llbvp93mg4csvb38") no-repeat center/ cover;*/
-	border-radius: 10px;
-	background: url(https://img.freepik.com/vector-gratis/fondo-nube-vector-estilo-corte-papel-pastel_53876-135914.jpg?w=996&t=st=1693848079~exp=1693848679~hmac=5a716e6071e600dacd244c2216e2ef8193368f62b3c82467b944555a3496b59b);
-	box-shadow: 5px 20px 50px #000;
-}
-#chk{
-	display: none;
-}
-.login{
-	position: relative;
-	width:100%;
-	height: 100%;
-}
-.labellg{
-	color: #e70000;
-	font-size: 2.3em;
-	justify-content: center;
-	display: flex;
-	margin: 60px;
-	font-weight: bold;
-	cursor: pointer;
-	transition: .5s ease-in-out;
-}
-.labellg1{
-	color: #fff;
-	font-size: 2.3em;
-	justify-content: center;
-	display: flex;
-	margin: 0px 60px 15px 60px;
-	font-weight: bold;
-	cursor: pointer;
-	transition: .5s ease-in-out;
-}
-.logols{
-    display: flex;
-    padding: 10px;
-    display: flex;
-	margin: 2rem 2rem 1rem 2rem;
-    justify-self: center;
-    justify-content: center;
-    background-color: #fff;
-    border-radius: 50%;
-}
-.inputlg{
-	width: 60%;
-	height: 20px;
-	background: #e0dede;
-	justify-content: center;
-	display: flex;
-	margin: 20px auto;
-	padding: 10px;
-	border: none;
-	outline: none;
-	border-radius: 5px;
-}
-.buttonlg{
-	width: 60%;
-	height: 40px;
-	margin: 10px auto;
-	justify-content: center;
-	display: block;
-	color: #fff;
-	background: #005187;
-	font-size: 1em;
-	font-weight: bold;
-	margin-top: 20px;
-	outline: none;
-	border: none;
-	border-radius: 5px;
-	transition: .2s ease-in;
-	cursor: pointer;
-}
-.buttonlg:hover{
-	background: #4d82bc;
-}
-.signup{
-	height: 460px;
-	background: #eee;
-	border-radius: 60% / 10%;
-	transform: translateY(-180px);
-	transition: .8s ease-in-out;
-}
-.signup label{
-	color: #005187;
-	transform: scale(.6);
+.indexForm {
+  margin: 1rem;
 }
 
-#chk:checked ~ .signup{
-	transform: translateY(-500px);
+.indexFormP {
+  display: flex;
 }
-#chk:checked ~ .signup label{
-	transform: scale(1);	
+
+.indexFormPP {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
 }
-#chk:checked ~ .signup label{
-	transform: scale(.6);
+
+header {
+  display: flex;
+  justify-content: space-between;
+  min-height: 65;
+  background-color: rgba(245, 245, 245, 0.7);
+  align-items: center;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: .5rem;
+}
+
+body {
+  background-image: url(../app/img/fondoSIngin.jpeg);
+}
+
+.userNameSty {
+  margin-right: 3rem;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+.bkbtn {
+  height: 50px;
+}
+
+.bckbtn {
+  border-radius: 1rem;
+  background-color: aliceblue;
+}
+
+.bckbtn:hover {
+  background-color: gray;
+  /* Cambia el fondo en hover */
+  color: #fff;
+  /* Cambia el color del texto en hover */
+  transition: background-color 0.3s, color 0.3s;
+  /* Transición de color y fondo en hover */
+}
+
+.logo {
+  height: 5rem;
+}
+
+.opBar {
+  display: flex;
+  margin-right: 3rem;
+}
+
+.session1 {
+  background-color: greenyellow;
+  display: flex;
+  flex-direction: column;
+}
+
+/*tabla*/
+.status_colors {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+
+}
+
+.completed {
+  text-decoration: line-through;
+  background-color: #2ecc71;
+  color: #111;
+}
+
+li form {
+  margin-left: 1rem;
+  padding: 1.5rem;
+  background-color: #eb4d4b;
+  color: #fff;
+  border-radius: .5rem;
+
+}
+
+ul {
+  list-style: none;
+  margin-right: 3rem;
+}
+
+.submenu {
+  position: absolute;
+  display: none;
+  margin: 0;
+  padding: 0;
+}
+
+.submenu li a {
+  display: block;
+  padding: 10px;
+  font-family: sans-serif;
+  text-decoration: none;
+}
+
+.menu li:hover .submenu {
+  display: block;
+}
+
+nav ul {
+  margin-right: 20px;
+  display: flex;
+  list-style: none;
+}
+
+nav a {
+  font-weight: 600;
+  padding-right: 10px;
+}
+
+nav a:hover {
+  color: aliceblue;
+}
+
+.container {
+  background-color: rgba(245, 245, 245, 0.4);
+  padding: 2rem;
+  border-radius: .5rem;
+  max-height: fit-content;
+  margin-bottom: 5rem;
+
+}
+
+select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 200px;
+  background-color: #fff;
+}
+
+select:hover {
+  border-color: #555;
+
+}
+
+
+select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+#test {
+  align-items: space-between;
+}
+
+.let1 {
+  background-color: #2ecc71;
+  padding: .5rem;
+  border-radius: .5rem;
+}
+
+.let2 {
+  background-color: #eb4d4b;
+  padding: .5rem;
+  border-radius: .5rem;
+}
+
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 1rem;
+  text-decoration: none;
+  border: none;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+  background-color: gainsboro;
+}
+
+button:focus {
+  outline: none;
+}
+
+button:active {
+  background-color: lightblue;
+}
+
+input[type="date"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 200px;
+}
+
+input[type="date"]:hover {
+  border-color: #555;
+}
+
+input[type="date"]:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 300px;
+}
+
+input[type="text"]:hover {
+  border-color: #555;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
 }

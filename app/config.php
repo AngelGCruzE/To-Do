@@ -2,10 +2,12 @@
 
 // VERIFICAMOS SI HAY UNA SESION INICIADA
 session_start();
-if (!isset($_SESSION['username']) && !isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['email']) && !isset($_SESSION['username']) && !isset($_SESSION['user_id'])) {
   // SI NO HAY SESION INICIADA LO REDIRIGIMOS A LOGIN
-  header("Location: userLyS.php");
+  header("Location: userLS.php");
   exit();
+}else{
+  echo "<script>Swal.fire('Any fool can use a computer')</script>";
 }
 
 // INCLUIMOS LA CONEXION A LA BASE DE DATOS,ADEMAS DE LAS FUNCIONES QUE EJECUTAN CAMBIOS EN LA APP
@@ -13,6 +15,14 @@ require '../functions/actions.php';
 require '../functions/db.php';
 
 
+
+/*Funciones */
+    // CERRAMOS LA SESION DEL USUARIO, BORRAMOS LA SESION Y LO REDIRIGIMOS AL login
+if (isset($_POST['LOGOUT'])) {
+  session_destroy();
+  header("Location: userLS.php");
+  exit();
+}
 ?>
 
 
@@ -34,6 +44,13 @@ require '../functions/db.php';
   </div>
 </header>
 
+<!-- FORMULARIO PARA SOLICITAR QUE SE EJECUTE LA FUNCION DE CERRAR SESION -->
+<form action="" method="POST">
+
+      <input type="hidden" name="LOGOUT" value="true">
+      <button type="submit">CERRAR SESION</button>
+
+    </form>
 <body>
 
 

@@ -1,10 +1,14 @@
 -- CREA UNA BASE DE DATOS EN phpMyAdmin QUE SE LLAME: "tasks"
 
 -- EJECUTA LAS CONSULTAS SOBRE LA BASE DE DATOS
+
+
 CREATE TABLE users (
   id INT PRIMARY KEY AUTO_INCREMENT,
+  email VARCHAR(255) NOT NULL,
   username VARCHAR(50) NOT NULL,
-  pass VARCHAR(255) NOT NULL
+  pass VARCHAR(255) NOT NULL,
+  state VARCHAR(255)
 );
 
 CREATE TABLE todos (
@@ -12,5 +16,7 @@ CREATE TABLE todos (
   user_id INT,
   task VARCHAR(255),
   state VARCHAR(255),
+  fecha DATE NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
+

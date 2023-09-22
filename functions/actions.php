@@ -4,14 +4,20 @@ require '../functions/db.php';
 
 
 //metodo para añadir tarea
-function createTask($task, $user_id){
+function createTask($task, $fecha , $user_id){
   global $conn;
 
-  $sql = "INSERT INTO todos (user_id, task, state) VALUES ('$user_id', '$task', 'PENDING')";
+  $sql = "INSERT INTO todos (user_id, task, state, fecha) VALUES ('$user_id', '$task', 'PENDING', '$fecha' )";
   $state = $conn->query($sql); //EJECUTAR CONSULTA ALA BASE DE DATOS
 
   if($state){
-     echo "<script>alert('Tarea Agregada');</script>"; // quite el comentario para que salga la alerta
+    echo '<script>
+    Swal.fire({
+        icon: "",
+        title: "Genial !!!",
+        text: "Tu tarea fue registrada exitosamente",
+    });
+  </script>'; // quite el comentario para que salga la alerta
   }
 }
 
@@ -34,15 +40,15 @@ function deleteTasks($user_id){
 }
 
 // INICIAMOS SESION POR MEDIO DEL USUARIO Y CONTRASEÑA (segura contra sqli)
-function login($user, $password){
+function login($email, $password){
   global $conn;
 
   // se prepara la consulta para evitar inyeccion
-  $sql = "SELECT id, username, pass FROM `tasks`.`users` WHERE username = ?";
+  $sql = "SELECT id, email, username, pass FROM `tasks`.`users` WHERE email = ?";
   $stmt = $conn->prepare($sql);
 
   // Vincula los parámetros y establece sus valores
-  $stmt->bind_param("s", $user);
+  $stmt->bind_param("s", $email);
 
   // Ejecuta la consulta
   $stmt->execute();
@@ -60,6 +66,7 @@ function login($user, $password){
     if (password_verify($password, $stored_password)) {
       // inicia secion
       session_start();
+      $_SESSION['email'] = $row['email'];
       $_SESSION['username'] = $row['username'];
       $_SESSION['user_id'] = $row['id'];
 
@@ -88,34 +95,33 @@ function login($user, $password){
 }
 
 // METODO PARA REGISTRARME EN LA APLICACION
-function signup($user, $password){
+function signup($user, $email, $password){
   global $conn;
 
   // valida el usuario con consulta preparada
-  $query_check_user = "SELECT * FROM `tasks`.`users` WHERE username = ?";
+  $query_check_user = "SELECT * FROM `tasks`.`users` WHERE email = ?";
   $stmt_check_user = $conn->prepare($query_check_user);
-  $stmt_check_user->bind_param("s", $user);
+  $stmt_check_user->bind_param("s", $email);
   $stmt_check_user->execute();
   $result_check_user = $stmt_check_user->get_result();
 
   // Comprueba si ya existe un usuario con el mismo nombre
   if ($result_check_user->num_rows > 0) {
-    echo "<script>alert('usuario existe');</script>";
+    echo "<script>alert('Correo Resgistrado');</script>";
     return false;
   } else {
     // Genera un hash 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // crea el usuario con la consulta prep
-    $query_insert_user = "INSERT INTO users (username, pass) VALUES (?, ?)";
+    $query_insert_user = "INSERT INTO users (username, email ,pass) VALUES (?, ?, ?)";
     $stmt_insert_user = $conn->prepare($query_insert_user);
-    $stmt_insert_user->bind_param("ss", $user, $hashed_password);
+    $stmt_insert_user->bind_param("sss", $user, $email, $hashed_password);
     $stmt_insert_user->execute();
 
     // Comprueba si la inserción tuvo éxito
     if ($stmt_insert_user->affected_rows === 1) {
       // redirige al login si se registro bien
-      header("Location: userLS.php");
       echo '<script>
             Swal.fire({
                 icon: "error",
@@ -123,6 +129,8 @@ function signup($user, $password){
                 text: "Usuario o contraseña incorrectos!",
             });
           </script>';/*ESTA CHINGADERA NO FUNCIONA*/
+      header("Location: userLS.php");
+      
       return true;
     } else {
       return false;
