@@ -34,7 +34,7 @@ function updateTask($task_id,$state){
 function deleteTasks($user_id){
   global $conn;
 
-  $sql = "DELETE FROM `tasks`.`todos` WHERE user_id = $user_id";
+  $sql = "DELETE FROM `ToDoDatabase`.`todos` WHERE user_id = $user_id";
   $conn->query($sql); //EJECUTAR CONSULTA ALA BASE DE DATOS
   
 }
@@ -44,7 +44,7 @@ function login($email, $password){
   global $conn;
 
   // se prepara la consulta para evitar inyeccion
-  $sql = "SELECT id, email, username, pass FROM `tasks`.`users` WHERE email = ?";
+  $sql = "SELECT id, email, username, pass FROM `ToDoDatabase`.`users` WHERE email = ?";
   $stmt = $conn->prepare($sql);
 
   // Vincula los parámetros y establece sus valores
@@ -99,7 +99,7 @@ function signup($user, $email, $password){
   global $conn;
 
   // valida el usuario con consulta preparada
-  $query_check_user = "SELECT * FROM `tasks`.`users` WHERE email = ?";
+  $query_check_user = "SELECT * FROM `ToDoDatabase`.`users` WHERE email = ?";
   $stmt_check_user = $conn->prepare($query_check_user);
   $stmt_check_user->bind_param("s", $email);
   $stmt_check_user->execute();

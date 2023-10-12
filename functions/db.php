@@ -3,8 +3,8 @@
 //parametros para conectarme ala base de datos
 $servername = "localhost";
 $username = "root";
-$password = "Xiaft4tF";
-$database = "tasks";
+$password = "----";
+$database = "ToDoDatabase";
 
 // Crear conexión
 $conn = new mysqli($servername, $username, $password, $database);
