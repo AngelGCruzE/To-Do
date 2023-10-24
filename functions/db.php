@@ -3,8 +3,8 @@
 //parametros para conectarme ala base de datos
 $servername = "localhost";
 $username = "root";
-$password = "----";
-$database = "ToDoDatabase";
+$password = "Xiaft4tF";
+$database = "id21412201_tododb";
 
 // Crear conexión
 $conn = new mysqli($servername, $username, $password, $database);
@@ -13,6 +13,4 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
   die("Conexión fallida: " . $conn->connect_error);
 }
-
-// echo "CONEXION ACTIVA";
 ?>

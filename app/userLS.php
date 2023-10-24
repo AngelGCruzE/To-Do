@@ -1,6 +1,16 @@
 <?php
 require '../functions/actions.php';
 require '../functions/db.php';
+                    if (isset($_POST['email']) && isset($_POST['password'])) {
+                        login($_POST['email'], $_POST['password']);
+                    }
+                    if (isset($_POST['user']) && isset($_POST['email']) && isset($_POST['password_1']) && isset($_POST['password_2'])) {
+                        if ($_POST['password_1'] == $_POST['password_2']) {
+                            signup($_POST['user'],$_POST['email'], $_POST['password_1']);
+                        }else{
+                            echo "<script>alert('Las contraseñas no son iguales');</script>";
+                        }
+                    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,23 +31,12 @@ require '../functions/db.php';
                 <div class="login">
                     <div class="logols"><img src="../app/img/logo_s.png"></div>
                     <form action="" method="POST">
-
                         <label class="labellg1" for="chk" aria-hidden="true">Login</label>
-                        <!--<input class="inputlg" type="email" name="email" placeholder="Email" required="">-->
                         <input class="inputlg" type="email" name="email" placeholder="Correo" required="">
                         <input class="inputlg" type="password" name="password" placeholder="Contraseña" required="">
                         <button type="submit" class="buttonlg">Login</button>
                     </form>
-                    <?php
-                    // VERIFICAMOS SI LOS CAMPOS ESTAN ESTABLECIDOS PARA EJECUTAR LAS CONSULTAS EN LA BASE DE DATOS
-                    if (isset($_POST['email']) && isset($_POST['password'])) {
-                        //SI ESTAN ESTABLECIDOS VERIFICAMOS EN LA BASE DE DATOS
-                        login($_POST['email'], $_POST['password']);
-                    }
-
-                    ?>
                 </div>
-
                 <div class="signup">
                     <form action="" method="POST">
                         <label class="labellg" for="chk" aria-hidden="true">Sign up</label>
@@ -47,22 +46,13 @@ require '../functions/db.php';
                         <input class="inputlg" type="password" name="password_2" placeholder="Confirme Contraseña" required="">
                         <button type="submit" class="buttonlg">Sign up</button>
                     </form>
-                    <?php
-                    // VERIFICAMOS SI LOS CAMPOS ESTAN ESTABLECIDOS PARA EJECUTAR LAS CONSULTAS EN LA BASE DE DATOS
-                    if (isset($_POST['user']) && isset($_POST['email']) && isset($_POST['password_1']) && isset($_POST['password_2'])) {
-                        if ($_POST['password_1'] == $_POST['password_2']) {
-                            // SI AMBAS CONTRASEÑAS SON IGUALES EJECUTAMOS LA FUNCION
-                            signup($_POST['user'],$_POST['email'], $_POST['password_1']);
-                        }else{
-                            echo("las contraseñas no son iguales");
-                        }
-                    }
-
-                    ?>
                 </div>
             </div>
         </div>
-    <!-- partial -->
+        <?php
+        ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+        ?>
 </body>
-
 </html>
